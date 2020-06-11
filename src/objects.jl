@@ -185,7 +185,7 @@ end
 
 # Known OI-FITS extension names.
 const EXTNAMES = ("OI_TARGET", "OI_WAVELENGTH", "OI_ARRAY", "OI_VIS",
-                  "OI_VIS2", "OI_T3", "OI_FLUX", "OI_CORR", "OI_INSPOL")
+                  "OI_VIS2", "OI_T3", "OI_T4", "OI_FLUX", "OI_CORR", "OI_INSPOL")
 
 """
     OIFITS.get_datablock_type([T = Float64,] extname)
@@ -204,6 +204,7 @@ get_datablock_type(::Type{T}, extname::Symbol) where {T<:AbstractFloat} =
      extname === :OI_VIS        ? OIVis{T}          :
      extname === :OI_VIS2       ? OIVis2{T}         :
      extname === :OI_T3         ? OIT3{T}           :
+     extname === :OI_T4         ? OIT4{T}           :
      extname === :OI_FLUX       ? OIFlux{T}         :
      extname === :OI_CORR       ? OICorrelation{T}  :
      extname === :OI_INSPOL     ? OIPolarization{T} :
@@ -216,6 +217,7 @@ get_datablock_type(::Type{T}, extname::AbstractString) where {T<:AbstractFloat} 
      extname == "OI_VIS"        ? OIVis{T}          :
      extname == "OI_VIS2"       ? OIVis2{T}         :
      extname == "OI_T3"         ? OIT3{T}           :
+     extname == "OI_T4"         ? OIT4{T}           :
      extname == "OI_FLUX"       ? OIFlux{T}         :
      extname == "OI_CORR"       ? OICorrelation{T}  :
      extname == "OI_INSPOL"     ? OIPolarization{T} :
@@ -241,6 +243,7 @@ get_extname(::Type{<:OIArray})        = "OI_ARRAY"
 get_extname(::Type{<:OIVis})          = "OI_VIS"
 get_extname(::Type{<:OIVis2})         = "OI_VIS2"
 get_extname(::Type{<:OIT3})           = "OI_T3"
+get_extname(::Type{<:OIT4})           = "OI_T4"
 get_extname(::Type{<:OIFlux})         = "OI_FLUX"
 get_extname(::Type{<:OICorrelation})  = "OI_CORR"
 get_extname(::Type{<:OIPolarization}) = "OI_INSPOL"

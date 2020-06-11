@@ -27,7 +27,7 @@ abstract type OIData{T} <: OIDataBlock{T} end
 """
 
 `OIMaster` stores the contents of an OI-FITS file.  All data-blocks containing
-measurements (OI_VIS, OI_VIS2, OI_T3, OI_FLUX and OI_POLARIZATION) are stored
+measurements (OI_VIS, OI_VIS2, OI_T3, OI_T4, OI_FLUX and OI_POLARIZATION) are stored
 into a vector and thus indexed by an integer.  Named data-blocks (OI_ARRAY,
 OI_WAVELENGTH and OI_CORREL) are indexed by their names (converted to upper
 case letters, with leading and trailing spaces stripped, multiple spaces
@@ -265,6 +265,41 @@ mutable struct OIT3{T} <: OIData{T}
     sta_index::Matrix{Int}  # station numbers contributing to the data
     flag::Matrix{Bool}      # flags
     OIT3{T}(; kwds...) where {T<:AbstractFloat} =
+        Builder.initialize!(new{T}(), kwds)
+end
+
+mutable struct OIT4{T} <: OIData{T}
+    # Custom Part
+    owner::OIMaster{T}      # master structure owning this datablock
+    array::OIArray{T}       # related telescope array
+    instr::OIWavelength{T}  # related instrument wavelengths
+    correl::OICorrelation{T}# related correlation data
+    # Header Part
+    revn::Int               # revision number of the table definition
+    date_obs::String        # UTC start date of observations
+    arrname::String         # name of corresponding array
+    insname::String         # name of corresponding detector
+    corrname::String        # name of corresponding correlation table
+    # Data Part
+    target_id::Vector{Int}  # target number as index into OI_TARGET table
+    time::Vector{T}         # UTC time of observation [s]
+    mjd::Vector{T}          # modified Julian Day [day]
+    int_time::Vector{T}     # integration time [s]
+    t4amp::Matrix{T}        # triple product amplitude
+    t4amperr::Matrix{T}     # error in triple product amplitude
+    corrindx_t4amp::Vector{Int} # index into correlation matrix for 1st T3AMP element
+    t4phi::Matrix{T}        # triple product phase [deg]
+    t4phierr::Matrix{T}     # error in triple product phase [deg]
+    corrindx_t4phi::Vector{Int} # index into correlation matrix for 1st T3PHI element
+    u1coord::Vector{T}      # U coordinate of baseline AB of the quad [m]
+    v1coord::Vector{T}      # V coordinate of baseline AB of the quad [m]
+    u2coord::Vector{T}      # U coordinate of baseline BC of the quad [m]
+    v2coord::Vector{T}      # V coordinate of baseline BC of the quad [m]
+    u3coord::Vector{T}      # U coordinate of baseline CD of the quad [m]
+    v3coord::Vector{T}      # V coordinate of baseline CD of the quad [m]
+    sta_index::Matrix{Int}  # station numbers contributing to the data
+    flag::Matrix{Bool}      # flags
+    OIT4{T}(; kwds...) where {T<:AbstractFloat} =
         Builder.initialize!(new{T}(), kwds)
 end
 
