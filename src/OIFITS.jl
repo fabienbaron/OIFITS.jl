@@ -24,10 +24,10 @@ using Compat
 import Base: getindex, setindex!, haskey, keys, show
 
 using FITSIO
-using FITSIO.Libcfitsio
+using CFITSIO
 
-using FITSIO: libcfitsio, fits_assert_ok, fits_assert_open
-using FITSIO.Libcfitsio: fits_get_errstatus
+using FITSIO: fits_assert_ok, fits_assert_open
+using CFITSIO: fits_get_errstatus
 
 include("types.jl")
 include("utils.jl")
