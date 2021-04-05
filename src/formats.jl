@@ -79,8 +79,8 @@ define("OI_ARRAY", 2,
         "STA_INDEX  I(1)   station index",
         "DIAMETER   E(1)   element diameter [m]",
         "STAXYZ     D(3)   station coordinates relative to array center [m]",
-        "FOV        D(1)   photometric field of view [arcsec]",
-        "FOVTYPE    A(6)   model for FOV: 'FWHM' or 'RADIUS'"])
+        "FOV       ?D(1)   photometric field of view [arcsec]",
+        "FOVTYPE   ?A(6)   model for FOV: 'FWHM' or 'RADIUS'"])
 
 # OI_WAVELENGTH definition (1st and 2nd revisions):
 for revn in (1, 2)
